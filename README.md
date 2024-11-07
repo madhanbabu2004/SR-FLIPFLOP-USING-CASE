@@ -1,14 +1,14 @@
 # SR-FLIPFLOP-USING-CASE
 
-## AIM:
+**AIM:**
 
-To implement  SR flipflop using verilog and validating their functionality using their functional table
+To implement  SR flipflop using verilog and validating their functionality using their functional tables
 
-## SOFTWARE REQUIRED:
+**SOFTWARE REQUIRED:**
 
 Quartus prime
 
-## THEORY
+**THEORY**
 
 SR Flip-Flop SR flip-flop operates with only positive clock transitions or negative clock transitions. Whereas, SR latch operates with enable signal. The circuit diagram of SR flip-flop is shown in the following figure.
 
@@ -32,51 +32,50 @@ By using three variable K-Map, we can get the simplified expression for next sta
  
 The maximum possible groupings of adjacent ones are already shown in the figure. Therefore, the simplified expression for next state Qt+1t+1 is Q(t+1)=S+R′Q(t)Q(t+1)=S+R′Q(t)
 
-## Procedure
+**Procedure**
 
-* Open Quartus Prime: Create a new project in Quartus Prime and set up your working directory, specifying the device family and specific FPGA model if needed.
+1.Type the program in Quartus software.
 
-* Write the Verilog Code: Open a new Verilog file and input the SR flip-flop code. Define inputs s, r, clk, and outputs q, qbar as given in the program. Use the always block to specify the behavior on the positive clock edge.
+2.Compile and run the program.
 
-* Compile the Code: Save the Verilog file, then compile it within Quartus Prime to check for syntax errors and ensure successful compilation.
+3.Generate the RTL schematic and save the logic diagram.
 
-* Simulate the Design: Go to the simulation settings in Quartus, configure the inputs (s, r, and clk), and run the simulation to observe the changes in output (q, qbar) with respect to the inputs and clock transitions.
+4.Create nodes for inputs and outputs to generate the timing diagram.
 
-* Verify the Output: Compare the simulation results with the truth table for the SR flip-flop to validate correct functionality.
+5.For different input combinations generate the timing diagram.
 
-## Program
+**PROGRAM**
 
-Program for flipflops and verify its truth table in quartus using Verilog programming.
-<br>Developed by: MADHAN BABU P
-<br>RegisterNumber: 212222230075
 ```
-module srflipflop(s,r,clk,q,qbar);
-input s,r,clk;
-output reg q;
-output reg qbar;
-initial 
-begin
-    q=0;
-    qbar=1;
-end
-always @(posedge clk)
-begin
-   q=s|(~r&q);
-   qbar=r|(~s&~q);
-end
+
+module EXP_6(q, q_bar, s,r, clk, reset);//SR Flip Flop Behavioral Level using ‘case’ 
+  input s,r,clk, reset;
+  output reg q;
+  output q_bar;
+ 
+  always@(posedge clk) begin // for synchronous reset
+    if(!reset)       
+			q <= 0;
+    else 
+  begin
+      case({s,r})       
+	     2'b00: q <= q;    // No change
+        2'b01:q<=1'b0;   // Write logic for reset
+        2'b10:q<=1'b1;   // Write logic for set
+        2'b11:q<=1'bx;   // Write logic for Invalid state
+      endcase
+    end
+  end
+  assign q_bar = ~q;
 endmodule
-
 ```
 
-## RTL LOGIC FOR FLIPFLOPS
-![Screenshot 2024-11-06 104939](https://github.com/user-attachments/assets/c4ef5665-e617-4eba-ae7d-ffbd08436030)
+**RTL LOGIC FOR FLIPFLOPS**
+![Screenshot 2024-04-24 192904](https://github.com/ZafreenJagir/SR-FLIPFLOP-USING-CASE/assets/144870573/a1094b04-8534-47ef-9804-de2be5624e84)
+**TIMING DIGRAMS FOR FLIP FLOPS**
+![Screenshot 2024-04-24 193050](https://github.com/ZafreenJagir/SR-FLIPFLOP-USING-CASE/assets/144870573/b5c79910-92d9-4c9f-bf5a-6bd04abe2a58)
 
-
-
-## TIMING DIGRAMS FOR FLIP FLOPS
-![Screenshot 2024-11-06 105537](https://github.com/user-attachments/assets/7819b819-5ce0-4478-97a9-fb8161f4bc42)
-
-
-
-## RESULTS
-Output is verfied Succesfully
+**RESULTS**
+```
+The observation of the simulation results and confirm the successful execution of the program.
+```
